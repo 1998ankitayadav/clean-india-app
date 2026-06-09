@@ -15,10 +15,12 @@ function App() {
   const [preview, setPreview] = useState("");
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
+
+  const API = import.meta.env.VITE_API_URL;
   const fetchReports = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/reports"
+         `${API}/api/reports`
       );
       setReports(res.data);
     } catch (error) {
@@ -75,7 +77,7 @@ const handleSubmit = async () => {
       formData.append("image", image);
 
       const uploadRes = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${API}/api/upload`,
         formData,
           {
           headers: {
@@ -89,7 +91,7 @@ const handleSubmit = async () => {
 
     // Step 2: Send report to backend
     await axios.post(
-      "http://localhost:5000/api/reports/add",
+      `${API}/api/reports/add`,
       {
         title,
         description,
@@ -127,7 +129,7 @@ const handleSubmit = async () => {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/reports/${id}`
+       `${API}/api/reports/${id}`
       );
       fetchReports();
     } catch (error) {
@@ -138,7 +140,7 @@ const handleSubmit = async () => {
   const markResolved = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/reports/${id}`
+       `${API}/api/reports/${id}` 
       );
       fetchReports();
     } catch (error) {
